@@ -1,0 +1,13 @@
+{
+  "name": "doctruth",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Runs library doc snippets against the installed version and publishes verified works/breaks pages.",
+  "scripts": {
+    "build": "node engine.mjs"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "library": "zod",
+  "blurb": "Every snippet below is executed against the actually-installed version — the result is real, not a guess.",
+  "snippets": [
+    { "id": "object-parse", "title": "Does z.object().parse() still work in Zod 4?", "query": "zod object parse example",
+      "code": "import { z } from 'zod';\nconst S = z.object({ name: z.string(), age: z.number() });\nconsole.log(JSON.stringify(S.parse({ name: 'Min', age: 30 })));" },
+    { "id": "string-email", "title": "Does z.string().email() still work in Zod 4, or is it deprecated?", "query": "zod string email deprecated v4",
+      "code": "import { z } from 'zod';\nconst S = z.string().email();\nconsole.log(S.parse('a@b.com'));" },
+    { "id": "top-level-email", "title": "z.email(): the Zod 4 top-level way to validate an email", "query": "zod v4 z.email example",
+      "code": "import { z } from 'zod';\nconsole.log(z.email().parse('a@b.com'));" },
+    { "id": "coerce-number", "title": "Does z.coerce.number() work in Zod 4?", "query": "zod coerce number string to number",
+      "code": "import { z } from 'zod';\nconsole.log(z.coerce.number().parse('42'));" },
+    { "id": "custom-error-message", "title": "Is the { message: ... } custom-error option still supported in Zod 4?", "query": "zod custom error message v4 message vs error",
+      "code": "import { z } from 'zod';\nconst S = z.string({ message: 'must be a string' });\ntry { S.parse(123); } catch (e) { console.log(e.issues[0].message); }" },
+    { "id": "safeparse-shape", "title": "What does z.number().safeParse() return for bad input in Zod 4?", "query": "zod safeParse error shape issues code",
+      "code": "import { z } from 'zod';\nconst r = z.number().safeParse('x');\nconsole.log(JSON.stringify({ success: r.success, code: r.error && r.error.issues[0].code }));" }
+  ]
+}
