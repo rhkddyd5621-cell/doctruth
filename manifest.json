@@ -1,18 +1,90 @@
 {
-  "library": "zod",
-  "blurb": "Every snippet below is executed against the actually-installed version — the result is real, not a guess.",
+  "title": "DocTruth",
+  "blurb": "Every snippet is executed against the actually-installed version — the result is real, not a guess.",
   "snippets": [
-    { "id": "object-parse", "title": "Does z.object().parse() still work in Zod 4?", "query": "zod object parse example",
-      "code": "import { z } from 'zod';\nconst S = z.object({ name: z.string(), age: z.number() });\nconsole.log(JSON.stringify(S.parse({ name: 'Min', age: 30 })));" },
-    { "id": "string-email", "title": "Does z.string().email() still work in Zod 4, or is it deprecated?", "query": "zod string email deprecated v4",
-      "code": "import { z } from 'zod';\nconst S = z.string().email();\nconsole.log(S.parse('a@b.com'));" },
-    { "id": "top-level-email", "title": "z.email(): the Zod 4 top-level way to validate an email", "query": "zod v4 z.email example",
-      "code": "import { z } from 'zod';\nconsole.log(z.email().parse('a@b.com'));" },
-    { "id": "coerce-number", "title": "Does z.coerce.number() work in Zod 4?", "query": "zod coerce number string to number",
-      "code": "import { z } from 'zod';\nconsole.log(z.coerce.number().parse('42'));" },
-    { "id": "custom-error-message", "title": "Is the { message: ... } custom-error option still supported in Zod 4?", "query": "zod custom error message v4 message vs error",
-      "code": "import { z } from 'zod';\nconst S = z.string({ message: 'must be a string' });\ntry { S.parse(123); } catch (e) { console.log(e.issues[0].message); }" },
-    { "id": "safeparse-shape", "title": "What does z.number().safeParse() return for bad input in Zod 4?", "query": "zod safeParse error shape issues code",
-      "code": "import { z } from 'zod';\nconst r = z.number().safeParse('x');\nconsole.log(JSON.stringify({ success: r.success, code: r.error && r.error.issues[0].code }));" }
+    {
+      "library": "zod",
+      "id": "object-parse",
+      "title": "Does z.object().parse() still work in Zod 4?",
+      "query": "zod object parse example",
+      "code": "import { z } from 'zod';\nconst S = z.object({ name: z.string(), age: z.number() });\nconsole.log(JSON.stringify(S.parse({ name: 'Min', age: 30 })));"
+    },
+    {
+      "library": "zod",
+      "id": "string-email",
+      "title": "Does z.string().email() still work in Zod 4, or is it deprecated?",
+      "query": "zod string email deprecated v4",
+      "code": "import { z } from 'zod';\nconst S = z.string().email();\nconsole.log(S.parse('a@b.com'));"
+    },
+    {
+      "library": "zod",
+      "id": "top-level-email",
+      "title": "z.email(): the Zod 4 top-level way to validate an email",
+      "query": "zod v4 z.email example",
+      "code": "import { z } from 'zod';\nconsole.log(z.email().parse('a@b.com'));"
+    },
+    {
+      "library": "zod",
+      "id": "coerce-number",
+      "title": "Does z.coerce.number() work in Zod 4?",
+      "query": "zod coerce number string to number",
+      "code": "import { z } from 'zod';\nconsole.log(z.coerce.number().parse('42'));"
+    },
+    {
+      "library": "zod",
+      "id": "custom-error-message",
+      "title": "Is the { message: ... } custom-error option still supported in Zod 4?",
+      "query": "zod custom error message v4 message vs error",
+      "code": "import { z } from 'zod';\nconst S = z.string({ message: 'must be a string' });\ntry { S.parse(123); } catch (e) { console.log(e.issues[0].message); }"
+    },
+    {
+      "library": "zod",
+      "id": "safeparse-shape",
+      "title": "What does z.number().safeParse() return for bad input in Zod 4?",
+      "query": "zod safeParse error shape issues code",
+      "code": "import { z } from 'zod';\nconst r = z.number().safeParse('x');\nconsole.log(JSON.stringify({ success: r.success, code: r.error && r.error.issues[0].code }));"
+    },
+    {
+      "library": "zod",
+      "id": "zod-4-error-errors-vs-issues",
+      "title": "Does error.errors still work in Zod 4 or is it error.issues now?",
+      "query": "zod 4 error.errors undefined issues",
+      "code": "import { z } from 'zod';\nconst result = z.number().safeParse('hello');\nconsole.log('isArray(error.errors):', Array.isArray(result.error.errors));\nconsole.log('isArray(error.issues):', Array.isArray(result.error.issues));\nconsole.log('error.issues[0].message:', result.error.issues[0].message);"
+    },
+    {
+      "library": "zod",
+      "id": "zod-4-z-email-vs-string-email",
+      "title": "Is z.string().email() deprecated in Zod 4 — should I use z.email() instead?",
+      "query": "zod 4 z.string().email deprecated z.email",
+      "code": "import { z } from 'zod';\nconsole.log('typeof z.email:', typeof z.email);\nconsole.log('z.email() rejects bad:', z.email().safeParse('not-an-email').success);\nconsole.log('z.email() accepts good:', z.email().safeParse('a@b.com').success);\nconsole.log('legacy z.string().email() rejects bad:', z.string().email().safeParse('bad').success);"
+    },
+    {
+      "library": "express",
+      "id": "express-5-wildcard-missing-parameter-name",
+      "title": "Why does app.get('*') throw 'Missing parameter name' in Express 5?",
+      "query": "express 5 app.get('*') Missing parameter name at index 1",
+      "code": "import express from 'express';\ntry {\n  express().get('*', (req, res) => res.send('ok'));\n  console.log(\"app.get('*'): registered (no throw)\");\n} catch (e) {\n  console.log(\"app.get('*') threw:\", e.message);\n}\nexpress().get('/*splat', (req, res) => res.send('ok'));\nconsole.log(\"app.get('/*splat'): registered fine\");"
+    },
+    {
+      "library": "uuid",
+      "id": "uuid-v4-named-import-and-v7",
+      "title": "Does import { v4 as uuidv4 } from 'uuid' still work, and is there a uuid v7?",
+      "query": "uuid v4 named import still work uuid v7 timestamp",
+      "code": "import { v4 as uuidv4, v7 as uuidv7 } from 'uuid';\nconst a = uuidv4();\nconst b = uuidv7();\nconsole.log('v4:', a);\nconsole.log('v7:', b);\nconsole.log('version digits -> v4:', a[14], '| v7:', b[14]);"
+    },
+    {
+      "library": "chalk",
+      "id": "chalk-5-esm-import",
+      "title": "How do I import chalk 5 — is it ESM-only now?",
+      "query": "chalk 5 ESM import default export not a function",
+      "code": "import chalk from 'chalk';\nconsole.log('typeof default export:', typeof chalk);\nconsole.log(chalk.blue('blue text'));\nconsole.log(chalk.red.bold('red bold text'));"
+    },
+    {
+      "library": "date-fns",
+      "id": "date-fns-4-named-imports",
+      "title": "Do named imports like import { format } from 'date-fns' still work in v4?",
+      "query": "date-fns v4 named import format addDays tree shaking",
+      "code": "import { format, addDays, formatDistanceToNow } from 'date-fns';\nconst d = new Date(2026, 0, 15);\nconsole.log('format:', format(d, 'yyyy-MM-dd'));\nconsole.log('addDays +10:', format(addDays(d, 10), 'yyyy-MM-dd'));\nconsole.log('typeof formatDistanceToNow:', typeof formatDistanceToNow);"
+    }
   ]
 }
