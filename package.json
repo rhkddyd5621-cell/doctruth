@@ -8,9 +8,13 @@
     "build": "node engine.mjs"
   },
   "dependencies": {
+    "axios": "^1.16.1",
     "chalk": "^5.6.2",
     "date-fns": "^4.4.0",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "glob": "^13.0.6",
+    "jsonwebtoken": "^9.0.3",
     "uuid": "^14.0.0",
     "zod": "^4.4.3"
   }

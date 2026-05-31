@@ -63,7 +63,7 @@
       "id": "express-5-wildcard-missing-parameter-name",
       "title": "Why does app.get('*') throw 'Missing parameter name' in Express 5?",
       "query": "express 5 app.get('*') Missing parameter name at index 1",
-      "code": "import express from 'express';\ntry {\n  express().get('*', (req, res) => res.send('ok'));\n  console.log(\"app.get('*'): registered (no throw)\");\n} catch (e) {\n  console.log(\"app.get('*') threw:\", e.message);\n}\nexpress().get('/*splat', (req, res) => res.send('ok'));\nconsole.log(\"app.get('/*splat'): registered fine\");"
+      "code": "import express from 'express';\nexpress().get('*', (req, res) => res.send('ok'));\nconsole.log('registered without throwing');"
     },
     {
       "library": "uuid",
@@ -85,6 +85,34 @@
       "title": "Do named imports like import { format } from 'date-fns' still work in v4?",
       "query": "date-fns v4 named import format addDays tree shaking",
       "code": "import { format, addDays, formatDistanceToNow } from 'date-fns';\nconst d = new Date(2026, 0, 15);\nconsole.log('format:', format(d, 'yyyy-MM-dd'));\nconsole.log('addDays +10:', format(addDays(d, 10), 'yyyy-MM-dd'));\nconsole.log('typeof formatDistanceToNow:', typeof formatDistanceToNow);"
+    },
+    {
+      "library": "jsonwebtoken",
+      "id": "jsonwebtoken-esm-named-export-sign-not-found",
+      "title": "Why does import { sign } from 'jsonwebtoken' throw \"Named export 'sign' not found\" in ESM?",
+      "query": "jsonwebtoken named export sign not found ESM CommonJS module",
+      "code": "import { sign } from 'jsonwebtoken';\nconsole.log(typeof sign);"
+    },
+    {
+      "library": "glob",
+      "id": "glob-named-import-v9-v10-default-export",
+      "title": "How do I import glob in v9/v10+ — why does import glob from 'glob' fail and what replaces the callback API?",
+      "query": "glob does not provide an export named default import named import globSync",
+      "code": "import { glob, globSync } from 'glob';\nconst a = await glob('*.json');\nconst b = globSync('*.json');\nconsole.log('async glob found:', a.sort().join(', '));\nconsole.log('globSync found:', b.sort().join(', '));"
+    },
+    {
+      "library": "dotenv",
+      "id": "dotenv-17-quiet-disable-tip-banner",
+      "title": "How do I stop dotenv v17 from printing the \"tip: dotenvx\" banner — what is quiet: true?",
+      "query": "dotenv injected env tip dotenvx disable quiet banner",
+      "code": "import dotenv from 'dotenv';\nimport { writeFileSync } from 'node:fs';\nimport { tmpdir } from 'node:os';\nimport { join } from 'node:path';\nconst envPath = join(tmpdir(), 'doctruth-dotenv.env');\nwriteFileSync(envPath, 'PORT=4000\\n');\nconsole.log('-- default dotenv.config(): prints the banner --');\ndotenv.config({ path: envPath });\nconsole.log('-- with { quiet: true }: banner suppressed --');\nconst r = dotenv.config({ path: envPath, quiet: true });\nconsole.log('PORT loaded:', r.parsed.PORT);"
+    },
+    {
+      "library": "axios",
+      "id": "axios-isaxioserror-check-error-type",
+      "title": "How do I check if an error is from axios — is axios.isAxiosError() the right way in axios 1.x?",
+      "query": "axios isAxiosError check error type axios 1.x typescript",
+      "code": "import axios from 'axios';\nconsole.log('typeof axios.isAxiosError:', typeof axios.isAxiosError);\nconst err = new axios.AxiosError('boom', 'ERR_BAD');\nconsole.log('isAxiosError(AxiosError):', axios.isAxiosError(err));\nconsole.log('isAxiosError(plain Error):', axios.isAxiosError(new Error('x')));"
     }
   ]
 }
